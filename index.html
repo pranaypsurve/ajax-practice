@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AJAX</title>
+  </head>
+  <body>
+    <section>
+      <h1>AJAX Example</h1>
+      <button onclick="loadAppData()" id="load-btn">Load Data</button>
+      <div id="app-content" style="padding: 6px; color: aqua"></div>
+    </section>
+  </body>
+  <script>
+    function loadAppData() {
+      const xhttp = new XMLHttpRequest();
+      const root = document.getElementById("app-content");
+      const loadBtn = document.getElementById("load-btn");
+      xhttp.onreadystatechange = function () {
+        if (this.readyState === 0) {
+          root.innerHTML = "request not initialized ...";
+        } else if (this.readyState === 1) {
+          loadBtn.setAttribute("disabled", true);
+          root.innerHTML = "server connection established ...";
+        } else if (this.readyState === 2) {
+          root.innerHTML = "request received ...";
+        } else if (this.readyState === 3) {
+          root.innerHTML = "loading data please wait ...";
+        } else if (this.readyState === 4) {
+          root.innerHTML = this.responseText;
+          loadBtn.removeAttribute("disabled");
+        }
+      };
+      xhttp.open("GET", "dummy.txt", true);
+      xhttp.send();
+    }
+  </script>
+</html>
